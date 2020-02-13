@@ -36,3 +36,14 @@ Para una imagen de 320 x 240 píxeles. Se decide recortar el tamaño de la image
 
 
 
+
+
+**Dimensionamiento de espacio de memoria.**
+
+![DIAGRAMA](./figs/cajacapturadatos2.PNG)
+
+La cámara OV7670 genera 16 bits de datos de píxeles el cual  generar 8 de esos 16 bits durante un ciclo de reloj,  por lo que se necesitan dos ciclos para leer completamente los datos de píxeles. 
+EL muestreo de  datos en el flanco de subida del reloj de la cámara. El formato de 16 bits de los datos de píxeles de la cámara es RGB565. Esto simplemente significa que los primeros 5 bits de los datos de píxeles de 16 bits son el valor del rojo, los siguientes 6 bits son el valor del verde y los últimos 5 bits son el valor del azul. Sin embargo, solo podemos almacenar 8 bits de datos de píxeles en nuestra RAM. 
+Hicimos esto leyendo los dos bytes de datos de la cámara. Luego asignamos los bits apropiados del formato RGB 565 al formato RGB 332. Por ejemplo, los tres bits rojos de RGB 332 se toman de los primeros tres bits del primer byte de RGB 565. Los 3 bits verdes de RGB 332 se toman de los últimos tres bits del primer byte de RGB 565. Los 2 azules Los bits de RGB 332 se toman de los últimos dos bits del segundo byte de RGB 565. Después de reducir los datos, escribimos los datos de 8 bits en la RAM. Solo escribimos los datos de 8 bits después de leer los dos bytes completos de datos de la cámara.
+
+
